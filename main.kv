@@ -1,0 +1,75 @@
+#:kivy 2.2.1
+
+MainLayout:
+
+
+<MainLayout>:
+
+    user_answer: user_answer
+
+    orientation: "vertical"
+    size_hint: .6, .7
+    pos_hint: { "center_x": .5, "center_y": .5 }
+
+    Label:
+        id: question
+        text: root.question_text
+        canvas.before:
+            Color:
+                rgb: .1, 0, 0
+            Rectangle:
+                pos: self.pos
+                size: self.size
+ 
+    Label:
+        # id: correct_answer
+        text: root.answer_text
+        canvas.before:
+            Color:
+                rgb: 0, .1, .1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+    BoxLayout:
+        size_hint: .6, .7
+        pos_hint: { "center_x": .5, "center_y": .5 }
+        TextInput:
+            id: user_answer
+            # text: root.user_text
+            multiline: False
+            padding_y: 0, 0
+            size_hint: 1, .5
+            pos_hint: { "center_x": .5, "center_y": .5 }
+    BoxLayout:
+        orientation: "horizontal"
+        spacing: "20dp"
+        size_hint: .6, .7
+        pos_hint: { "center_x": .5, "center_y": .5 }
+        Button:
+            background_color: 0, 0, 0, 0,
+            size_hint: 0.2, 0.4
+            pos_hint: { "center_x": .5, "center_y": .5 }
+            text: "Submit"
+            canvas.before:
+                Color:
+                    rgb: 0, .1, 0
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [8]
+            on_release: root.submit(user_answer)
+        Button:
+            background_color: 0, 0, 0, 0
+            size_hint: 0.2, 0.4
+            pos_hint: { "center_x": .5, "center_y": .5 }
+            text: "Next"
+            disabled: root.disable_next
+            canvas.before:
+                Color:
+                    rgb: .1, 0, 0
+                RoundedRectangle:
+                    size: self.size
+                    pos: self.pos
+                    radius: [8]
+            on_release: root.next()

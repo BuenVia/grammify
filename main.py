@@ -1,23 +1,65 @@
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.properties import ObjectProperty, StringProperty, BooleanProperty
 
-from kivymd.app import MDApp
-from kivymd.uix.screen import MDScreen
-from kivymd.uix.button import MDRectangleFlatButton
+list_of_words = [
+    {
+        "eng": "run",
+        "spa": "correr"
+    },
+    {
+        "eng": "jump",
+        "spa": "saltar"
+    },
+    {
+        "eng": "speak",
+        "spa": "hablar"
+    }
+]
 
-class MainApp(MDApp):
+class MainLayout(BoxLayout):
 
-    def build(self):
-        self.theme_cls.theme_style = "Dark"
-        self.theme_cls.primary_palette = "Teal"
+    question_text = StringProperty('')
+    answer_text = StringProperty('')
+    user_answer = ObjectProperty(None)
+    disable_next = BooleanProperty(True)
 
-        screen = MDScreen()
-        
-        self.button = MDRectangleFlatButton(
-            text = "Hello World",
-            pos_hint = { "center_x": 0.5, "center_y": 0.5 }
-        )
-        screen.add_widget(self.button)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
-        return screen
-    
+        self.index = 0
+        self.vocabulary = list_of_words[self.index]
+        self.question = self.vocabulary["eng"]
+        self.answer = self.vocabulary["spa"]
+        self.user_answer = ""
+        self.question_text = self.question
+        self.answer_text = ''
+        self.disable_next = True
+
+    def submit(self, widget):
+        if widget.text == self.answer:
+            print("Correct")
+            self.answer_text = self.answer
+            self.disable_next = False
+        else:
+            print("False")
+            self.answer_text = self.vocabulary["spa"]
+
+    def next(self):
+        print('Next')
+        self.index += 1
+        self.vocabulary = list_of_words[self.index]
+        self.question = self.vocabulary["eng"]
+        self.answer = self.vocabulary["spa"]
+        print(self.index)
+        self.question_text = self.question
+        self.answer_text = ""
+        self.user_answer.text = ""
+        self.disable_next = True
+            
+
+class MainApp(App):
+    pass
+
 if __name__ == "__main__":
     MainApp().run()

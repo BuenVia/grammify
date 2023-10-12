@@ -1,0 +1,13 @@
+#:kivy 2.2.1
+
+TestLayout:
+
+<TestLayout>:
+    orientation: "vertical"
+    Label:
+        text: root.screen_text
+    TextInput:
+        multiline: False
+    Button:
+        text: "Submit"
+        on_release: root.submit()
