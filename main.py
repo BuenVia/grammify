@@ -23,6 +23,7 @@ class MainLayout(BoxLayout):
     answer_text = StringProperty('')
     user_answer = ObjectProperty(None)
     disable_next = BooleanProperty(True)
+    disable_submit = BooleanProperty(False)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -37,25 +38,29 @@ class MainLayout(BoxLayout):
         self.disable_next = True
 
     def submit(self, widget):
-        if widget.text == self.answer:
+        if widget.text == "":
+            return
+        elif widget.text == self.answer:
             print("Correct")
             self.answer_text = self.answer
             self.disable_next = False
+            self.disable_submit = True
         else:
             print("False")
             self.answer_text = self.vocabulary["spa"]
 
     def next(self):
-        print('Next')
-        self.index += 1
-        self.vocabulary = list_of_words[self.index]
-        self.question = self.vocabulary["eng"]
-        self.answer = self.vocabulary["spa"]
-        print(self.index)
-        self.question_text = self.question
-        self.answer_text = ""
-        self.user_answer.text = ""
-        self.disable_next = True
+        if self.index < len(list_of_words) - 1:
+            print('Next')
+            self.index += 1
+            self.vocabulary = list_of_words[self.index]
+            self.question = self.vocabulary["eng"]
+            self.answer = self.vocabulary["spa"]
+            print(self.index)
+            self.question_text = self.question
+            self.answer_text = ""
+            self.user_answer.text = ""
+            # self.disable_next = True
             
 
 class MainApp(App):

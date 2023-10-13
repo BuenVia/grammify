@@ -51,6 +51,7 @@ MainLayout:
             size_hint: 0.2, 0.4
             pos_hint: { "center_x": .5, "center_y": .5 }
             text: "Submit"
+            disabled: True if user_answer.text == ""  else True if next_btn.disabled == False else False
             canvas.before:
                 Color:
                     rgb: 0, .1, 0
@@ -60,6 +61,7 @@ MainLayout:
                     radius: [8]
             on_release: root.submit(user_answer)
         Button:
+            id: next_btn
             background_color: 0, 0, 0, 0
             size_hint: 0.2, 0.4
             pos_hint: { "center_x": .5, "center_y": .5 }
